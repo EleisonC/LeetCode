@@ -103,3 +103,27 @@ pub fn length_of_longest_substring(s: String) -> i32 {
 
     hashset_max_len.try_into().unwrap()
 }
+
+pub fn max_area(height: Vec<i32>) -> i32 {
+    let mut max_area = 0;
+    let mut curren_area: i32;
+
+    let mut left_ptr = 0 as usize;
+    let mut right_ptr = (height.len() - 1) as usize;
+
+    while left_ptr < right_ptr {
+        
+        let height_con = height[right_ptr].min(height[left_ptr]);
+        let  lenght = (right_ptr - left_ptr) as i32;
+
+        curren_area = height_con * lenght;
+        max_area = max_area.max(curren_area);
+
+        if  height[left_ptr] < height[right_ptr] {
+            left_ptr += 1
+        } else {
+            right_ptr -= 1
+        }
+    }
+    max_area
+}
