@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 pub fn is_palindrome(s: String) -> bool {
     let new_s = s.to_lowercase();
@@ -127,3 +127,59 @@ pub fn max_area(height: Vec<i32>) -> i32 {
     }
     max_area
 }
+
+//Just not to forget i could also write terrible code but i can learn to
+
+// pub fn character_replacement(mut s: String, k: i32) -> i32 {
+//     let mut max_substr_count = 0;
+//     let mut current_count:i32;
+
+//     let mut num_k: i32 = k;
+//     let mut left_ptr = 0;
+//     for (u, char) in s.clone().chars().enumerate() {
+//         let left_char = s.chars().nth(left_ptr).unwrap();
+//         if left_ptr <= u && left_char == char {
+//             current_count = (u - left_ptr + 1) as i32;
+//             max_substr_count = max_substr_count.max(current_count);
+//             continue;
+//         }
+//         if num_k == 0 && left_char != char && left_ptr <= u {
+//             left_ptr += 1;
+//             continue;
+//         } else {
+//             num_k -= 1;
+//             s = s.replacen(&char.to_string(),&left_char.to_string(), 1);
+//             current_count = (u - left_ptr + 1) as i32;
+//             max_substr_count = max_substr_count.max(current_count);
+//             continue;
+//         }
+//         println!("These are the versions of s when left{left_char} the  {s}") 
+//     }
+//     max_substr_count
+// }
+
+
+pub fn character_replacement (s: String, k: i32) -> i32 {
+    let mut char_count = HashMap::new();
+
+    let mut max_freq_char = 0; 
+    let mut left = 0;
+
+    let mut max_len = 0;
+    let chars:Vec<char> = s.chars().collect();
+
+    for right in 0..s.len() {
+        let right_char = chars[right];
+
+        *char_count.entry(right_char).or_insert(0) +=1;
+        max_freq_char = max_freq_char.max(*char_count.get(&right_char).unwrap());
+
+        while (right - left + 1) as i32 - max_freq_char > k {
+            let left_char = chars[left];
+            *char_count.get_mut(&left_char).unwrap() -=1;
+            left += 1;
+        }
+        max_len = max_len.max((right - left + 1) as i32);
+    }
+    max_len
+}   

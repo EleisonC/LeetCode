@@ -7,7 +7,7 @@ fn main() {
 
     // let nums = vec![1, 2, 2];
     // let k = 3;
-    let result = leetcode::max_area([1,1].to_vec());
+    let result = leetcode::character_replacement("ABAB".to_string(), 0);
 
     println!("The this is happening: {:?}", result)
 }
