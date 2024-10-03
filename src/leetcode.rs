@@ -1,3 +1,4 @@
+use core::num;
 use std::collections::{HashMap, HashSet};
 
 pub fn is_palindrome(s: String) -> bool {
@@ -183,3 +184,43 @@ pub fn character_replacement (s: String, k: i32) -> i32 {
     }
     max_len
 }   
+
+pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {
+    let mut sum_vec = vec![];
+    let mut left = 0 as usize;
+    let mut right = numbers.len() - 1 as usize;
+
+    while left < right  {
+        let current_sum = numbers[left] + numbers[right];
+        if current_sum == target {
+            sum_vec.extend(vec![left as i32  + 1, right as i32 + 1]);
+            break;
+        }
+        if current_sum > target {
+            right -= 1
+        } else if current_sum < target {
+            left += 1
+        }
+    }
+    sum_vec
+}
+
+pub fn max_sum_subarray(numbers: Vec<i32>, k: i32) -> i32 {
+    let mut max_sum = 0;
+    let mut current_sum = 0;
+
+    let mut left = 0 as usize;
+
+    for right in 0..numbers.len() {
+        current_sum +=  numbers[right];
+
+        if (right - left + 1) as i32 > k {
+            current_sum -= numbers[left];
+            left += 1;
+        }
+        if (right - left + 1) as i32 == k {
+            max_sum = max_sum.max(current_sum);
+        }
+    }
+    max_sum
+}
