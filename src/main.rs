@@ -7,7 +7,7 @@ fn main() {
 
     // let nums = vec![1, 2, 2];
     // let k = 3;
-    let result = leetcode::max_sum_subarray([100, 200, 300, 400].to_vec(), 2);
+    let result = leetcode::remove_duplicates(&mut [1,1,2].to_vec());
 
     println!("The this is happening: {:?}", result)
 }

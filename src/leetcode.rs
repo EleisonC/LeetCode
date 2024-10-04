@@ -224,3 +224,37 @@ pub fn max_sum_subarray(numbers: Vec<i32>, k: i32) -> i32 {
     }
     max_sum
 }
+
+
+// pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
+//     let mut num_hashset = HashSet::new();
+//     let mut right = 0 as usize;
+//     while  right < nums.len() {
+//         if num_hashset.contains(&nums[right]) {
+//             nums.remove(right);
+//             continue;
+//         } else  {
+//             num_hashset.insert(nums[right]);
+//         }
+//         right += 1
+//     }
+//     println!("the array should look like: {:?}", nums);
+//     nums.len().try_into().unwrap()
+// }
+
+
+pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
+    if nums.is_empty() {
+        return 0;
+    }
+
+    let mut left = 0 as usize;
+    for right in 1..nums.len() {
+        if nums[left] != nums[right] {
+            left += 1;
+            nums[left] = nums[right]
+        }
+    }
+
+    (left + 1) as i32
+}
