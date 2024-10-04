@@ -225,6 +225,7 @@ pub fn max_sum_subarray(numbers: Vec<i32>, k: i32) -> i32 {
     max_sum
 }
 
+// reminder i can write not the best code also this was solution one.
 
 // pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
 //     let mut num_hashset = HashSet::new();
@@ -242,7 +243,7 @@ pub fn max_sum_subarray(numbers: Vec<i32>, k: i32) -> i32 {
 //     nums.len().try_into().unwrap()
 // }
 
-
+// This ws a soltuion 2 that i had in mind
 pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
     if nums.is_empty() {
         return 0;
