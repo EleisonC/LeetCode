@@ -1,4 +1,5 @@
 
+use core::num;
 use std::collections::{HashMap, HashSet};
 
 pub fn is_palindrome(s: String) -> bool {
@@ -337,4 +338,26 @@ pub fn check_inclusion(s1: String, s2: String) -> bool {
         }
     }
     false
+}
+
+pub fn sort_colors(nums: &mut Vec<i32>) {
+    let mut red_ptr = 0 as usize;
+    let mut blue_ptr = nums.len() as usize;
+    let mut curren_ptr = 0 as usize;
+
+    while curren_ptr < blue_ptr {
+        let currt_color = nums[curren_ptr];
+        if currt_color == 2 {
+            blue_ptr -= 1;
+            nums.swap(curren_ptr, blue_ptr);
+        } else if currt_color == 0 {
+            nums.swap(curren_ptr, red_ptr);
+            red_ptr += 1;
+            curren_ptr += 1;
+        } else {
+            curren_ptr += 1
+        }
+    }
+    println!("The new vec is: {:?}", nums);
+    
 }
