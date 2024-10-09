@@ -1,4 +1,4 @@
-use core::num;
+
 use std::collections::{HashMap, HashSet};
 
 pub fn is_palindrome(s: String) -> bool {
@@ -258,4 +258,83 @@ pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
     }
 
     (left + 1) as i32
+}
+
+pub fn total_fruit(fruits: Vec<i32>) -> i32 {
+    let mut fruit_hash: HashMap<i32, i32> = HashMap::new();
+    let mut left_ptr = 0 as usize;
+    let mut max_fruit = 0;
+
+    for right_ptr in 0..fruits.len() {
+        *fruit_hash.entry(fruits[right_ptr]).or_insert(0) += 1;
+
+        while fruit_hash.len() > 2 {
+           if let Some(count) = fruit_hash.get_mut(&fruits[left_ptr]) {
+            *count -= 1;
+            if *count == 0 {
+                fruit_hash.remove(&fruits[left_ptr]);
+            }
+           }
+           left_ptr += 1
+        }
+
+        max_fruit = max_fruit.max(right_ptr - left_ptr + 1)
+    }
+
+    max_fruit.try_into().unwrap()
+}
+
+
+pub fn total_fruit_v2(fruits: Vec<i32>) -> i32 {
+                    // Remove the fruit that was seen the longest ago (smallest index)
+    let (mut tt_max, mut curr_max) = (0, 0);
+    let (mut curr, mut prev) = (fruits[0], None);
+
+    let l_ptr = 0 as usize;
+    for (r_ptr, fruit) in fruits.iter().copied().enumerate() {
+        if curr != fruit {
+            if prev.map_or(false, |prev:i32| prev != fruit) {
+                tt_max = tt_max.max(curr_max);
+                curr_max = (r_ptr - l_ptr) as i32;
+            }
+        }
+        curr_max += 1
+    }
+    tt_max
+}
+
+pub fn check_inclusion(s1: String, s2: String) -> bool {
+    if s1.len() > s2.len() {
+        return false;
+    }
+
+    let mut s1_count = vec![0; 26];
+    let mut window_count = vec![0; 26];
+    let a_ascii = 'a' as usize;
+
+    for ch in s1.chars() {
+        // s1_count[ch as usize - a_ascii] --> convert character to it's zero based index in the alphabet
+        s1_count[ch as usize - a_ascii] += 1
+    }
+
+    for ch in s2.chars().take(s1.len()) {
+        window_count[ch as usize - a_ascii] += 1
+    }
+
+    if s1_count == window_count {
+        return true 
+    }
+
+    for ptr in s1.len()..s2.len() {
+        let new_ch = s2.chars().nth(ptr).unwrap();
+        let remove_ch = s2.chars().nth(ptr - s1.len()).unwrap();
+
+        window_count[new_ch as usize - a_ascii] += 1;
+        window_count[remove_ch as usize - a_ascii] -= 1;
+
+        if s1_count == window_count {
+            return true 
+        }
+    }
+    false
 }

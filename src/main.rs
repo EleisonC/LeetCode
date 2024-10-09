@@ -7,7 +7,7 @@ fn main() {
 
     // let nums = vec![1, 2, 2];
     // let k = 3;
-    let result = leetcode::remove_duplicates(&mut [1,1,2].to_vec());
+    let result = leetcode::check_inclusion("adc".to_string(),"dcda".to_string());
 
     println!("The this is happening: {:?}", result)
 }
