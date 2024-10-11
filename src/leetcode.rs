@@ -361,3 +361,61 @@ pub fn sort_colors(nums: &mut Vec<i32>) {
     println!("The new vec is: {:?}", nums);
     
 }
+
+pub fn find_anagrams(s: String, p: String) -> Vec<i32> {
+    let mut result = vec![];
+    if p.len() > s.len() {
+        return result;
+    }
+
+    // Convert string to a vector of characters for direct indexing
+    let s_chars: Vec<char> = s.chars().collect();
+    let mut alph_indx = vec![0; 26];
+    let mut current_window = vec![0; 26];
+    let a_asci = 'a' as usize;
+
+    for ch in p.chars() {
+        alph_indx[ch as usize - a_asci] += 1; 
+    }
+
+    for i in 0..p.len() {
+        current_window[s_chars[i] as usize - a_asci] += 1; 
+    }
+
+    if alph_indx == current_window {
+        result.push(0);
+    }
+
+    for r_ptr in p.len()..s.len() {
+        current_window[s_chars[r_ptr] as usize - a_asci] += 1;
+        current_window[s_chars[r_ptr - p.len()] as usize - a_asci] -= 1;
+
+        if alph_indx == current_window {
+            result.push((r_ptr - p.len() + 1) as i32);
+        }
+    }
+
+    result
+}
+
+pub fn longest_ones(nums: Vec<i32>, k: i32) -> i32 {
+    let mut max_count = 0;
+    let mut l_ptr = 0 as usize;
+
+    let mut zero_count = 0;
+    for r_ptr in 0..nums.len() {
+        let current_el = nums[r_ptr];
+        if current_el == 0 {
+            zero_count += 1;
+            println!("The number of {current_el} and {zero_count} at position {r_ptr} and ->>> Left {l_ptr}");
+        }
+        while zero_count > k {
+            if nums[l_ptr] == 0 {
+                zero_count -= 1;
+            }
+            l_ptr += 1;
+        }
+        max_count = max_count.max((r_ptr - l_ptr + 1) as i32);
+    }
+    max_count
+}

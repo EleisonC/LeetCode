@@ -7,7 +7,7 @@ fn main() {
 
     // let nums = vec![1, 2, 2];
     // let k = 3;
-    let result = leetcode::sort_colors(&mut [0, 2, 0].to_vec());
+    let result = leetcode::longest_ones([1,1,1,0,0,0,1,1,1,1,0].to_vec(), 2);
 
     println!("The this is happening: {:?}", result)
 }
