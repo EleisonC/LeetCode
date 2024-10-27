@@ -1,5 +1,5 @@
 
-use core::num;
+use core::{hash, num};
 use std::collections::{HashMap, HashSet};
 
 pub fn is_palindrome(s: String) -> bool {
@@ -418,4 +418,48 @@ pub fn longest_ones(nums: Vec<i32>, k: i32) -> i32 {
         max_count = max_count.max((r_ptr - l_ptr + 1) as i32);
     }
     max_count
+}
+
+pub fn subarrays_with_k_distinct(nums: Vec<i32>, k: i32) -> i32 {
+    let mut hashset_sub: HashSet<Vec<i32>> = HashSet::new();
+    let mut l_ptr = 0 as usize;
+
+    let mut current_window = vec![];
+    for r_ptr in 0..nums.len() {
+        let current_value = nums[r_ptr];
+        if current_window.contains(&current_value) && l_ptr < r_ptr {
+            l_ptr += 1;
+        } else {
+            current_window.push(current_value);
+        }
+        println!("TOP This is the current window: {:?} **** the set: {:?}", current_window, hashset_sub);
+        while l_ptr < r_ptr && current_window.len() >= k as usize {
+            if current_window.len() == k as usize {
+                println!("Goal: {:?}", current_window);
+                current_window.sort_unstable();
+                hashset_sub.insert(current_window.clone());
+                
+            }
+            current_window.remove(0);
+            l_ptr += 1
+        }
+        println!("BOTTOM This is the current window: {:?} **** the set: {:?}", current_window, hashset_sub)
+    }
+ 
+    if hashset_sub.len() == 0 {
+        return 0
+    } else {
+        return hashset_sub.len() as i32
+    }
+}
+
+pub fn move_zeroes(nums: &mut Vec<i32>) {
+    let mut l_ptr = 0 as usize;
+
+    for r_ptr in 0..nums.len() {
+        if nums[r_ptr] != 0 {
+            nums.swap(l_ptr, r_ptr);
+            l_ptr += 1;
+        }
+    }
 }
