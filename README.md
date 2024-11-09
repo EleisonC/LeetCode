@@ -1,2 +1,2 @@
 # LeetCode
-Rust Leet Code Solutions
+Leet Code Solutions
